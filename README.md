@@ -59,6 +59,21 @@ sudo pppd /dev/ttyUSB1 57600 \
 
 Radio is usually `/dev/ttyUSB0`.
 
+**Setup PPP (run on each machine with its own IP):**
+```bash
+# Machine A
+sudo pppd /dev/ttyUSB0 57600 \
+  10.10.10.1:10.10.10.2 \
+  noauth local debug nodetach nocrtscts nodefaultroute \
+  persist maxfail 0 mtu 296 mru 296
+
+# Machine B
+sudo pppd /dev/ttyUSB0 57600 \
+  10.10.10.2:10.10.10.1 \
+  noauth local debug nodetach nocrtscts nodefaultroute \
+  persist maxfail 0 mtu 296 mru 296
+```
+
 **Test PPP:**
 ```bash
 ping 10.10.10.2   # from A
@@ -92,4 +107,13 @@ If not:
 export ROS_SUPER_CLIENT=TRUE
 ros2 topic list
 ```
+
+**Teardown:**
+```bash
+sudo pkill pppd || true
+sudo pkill socat || true
+sudo rm -f /tmp/ttyA /tmp/ttyB
+sudo kill "$(cat /tmp/pppA.pid)"
+```
+
 # ros2_over_lora
