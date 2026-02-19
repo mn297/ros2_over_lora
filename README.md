@@ -65,13 +65,13 @@ Radio is usually `/dev/ttyUSB0`.
 sudo pppd /dev/ttyUSB0 57600 \
   10.10.10.1:10.10.10.2 \
   noauth local debug nodetach nocrtscts nodefaultroute \
-  persist maxfail 0 mtu 296 mru 296
+  persist maxfail 0 mtu 128 mru 128
 
 # Machine B
 sudo pppd /dev/ttyUSB0 57600 \
   10.10.10.2:10.10.10.1 \
   noauth local debug nodetach nocrtscts nodefaultroute \
-  persist maxfail 0 mtu 296 mru 296
+  persist maxfail 0 mtu 128 mru 128
 ```
 
 **Test PPP:**
